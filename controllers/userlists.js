@@ -42,7 +42,7 @@ exports.giftCatagories = (req, res) => {
 
 // ✅ Fetch Blog Posts
 exports.blogPosts = (req, res) => {
-    let sql = 'SELECT * FROM blogPosts';
+    let sql = 'SELECT * FROM blogposts';
 
     db.query(sql, (err, results) => {
         if (err) {
@@ -110,3 +110,15 @@ exports.getProducts = (req, res) => {
     });
 };
 
+exports.scrollscreen = (req, res) => {
+    const sql = `SELECT * FROM scrollscreen`;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Database Error (scrollscreen):', err);
+            return res.status(500).json({ success: false, message: 'Failed to fetch scroll screens', error: err.message });
+        }
+        console.log('Scroll Screens:', results);
+        res.json({ success: true, data: results });
+    });
+};      
