@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const adminRoutes = require('./routes/adminRoutes');
 const userDashboardRoutes = require('./routes/userDashboardRoutes');
+const setupSwagger = require("./swagger"); // Import Swagger setup
 const cors = require('cors');
 const app = express();
 
@@ -11,6 +12,12 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization'
 };
+
+
+
+// Initialize Swagger
+setupSwagger(app);
+
 
 // const corsOptions = {
 //     origin: ['http://your-frontend.com', 'https://another-site.com'],
@@ -27,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // User routes
 app.use('/admin', adminRoutes);
-app.use('/api', userDashboardRoutes);
+app.use('/user', userDashboardRoutes);
 
 const PORT = process.env.PORT || 3600;
 

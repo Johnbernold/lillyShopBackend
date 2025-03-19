@@ -97,3 +97,16 @@ exports.contactMessages = (req, res) => {
     });
 };
 
+exports.getProducts = (req, res) => {
+    let sql = 'SELECT * FROM giftdata WHERE categoryId = ?';
+
+    db.query(sql, [req.body.categoryId], (err, results) => {
+        if (err) {
+            console.error('Database Error (getProducts):', err);
+            return res.status(500).json({ success: false, message: 'Failed to fetch contact messages', error: err.message });
+        }
+        console.log('Contact Messages:', results);
+        res.json({ success: true, data: results });
+    });
+};
+

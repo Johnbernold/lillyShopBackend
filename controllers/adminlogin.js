@@ -132,6 +132,7 @@ exports.deleteCategory = async (req, res) => {
     }
 };
 
+
 // ✅ Update Category
 exports.updateCategory = async (req, res) => {
     console.log('req.body',req.body)
