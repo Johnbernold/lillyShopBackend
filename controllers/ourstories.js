@@ -4,7 +4,7 @@ const ourStoriesService = require("../services/ourstorieService");
 
 // ✅ Insert Our Stories
 exports.insertOurStories = async (req, res) => {
-    const { headline, description, imageUrl } = req.body;
+    const { headline, description } = req.body;
 
     if (!headline || !description) {
         return res.status(400).json({ success: false, message: 'Missing required fields' });
