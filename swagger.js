@@ -11,7 +11,8 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3600", // Change to your deployed server URL
+        url: process.env.SERVER_URL,
+        description: "Localhost",
       },
     ],
     components: {
