@@ -77,6 +77,20 @@ router.get('/blog', userlists.blogPosts);
  */
 router.get('/ourStories', userlists.ourStories);
 
+/** 
+ * @swagger
+ * /user/scrollscreen:
+ *   get:
+ *     summary: Get all 
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved users.
+ *       500:
+ *         description: Internal server error.
+ */      
+router.get('/scrollscreen', userlists.scrollscreen);
+
 /**
  * @swagger
  * /user/insertMessage:

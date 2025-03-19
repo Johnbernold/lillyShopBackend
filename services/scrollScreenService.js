@@ -5,7 +5,7 @@ const { extractFileName, deleteImageFromS3,insertImageToS3 } = require("../utils
 exports.insertServiceScrollScreen = async ( scrollTitle, scrollSubtitle1, scrollSubtitle2, scrollSubtitle3, scrollImage) => {
     return new Promise((resolve, reject) => {
         const sqlCheck = "SELECT * FROM scrollscreen WHERE scrollTitle = ?";
-
+        
         db.query(sqlCheck, [scrollTitle], async (err, results) => {
             if (err) return reject("Database error: " + err);
             if (results.length > 0) return reject("Scroll Title already exists");
