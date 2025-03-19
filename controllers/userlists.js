@@ -14,7 +14,7 @@ exports.gifts = (req, res) => {
 
 // ✅ Fetch Gift Data
 exports.giftData = (req, res) => {
-    let sql = 'SELECT * FROM giftData';
+    let sql = 'SELECT * FROM giftdata';
 
     db.query(sql, (err, results) => {
         if (err) {
