@@ -32,7 +32,6 @@ exports.deleteServiceCategory = async (categoryId) => {
         const sqlGetCategory = "SELECT imageSrc FROM gifts WHERE categoryId = ?";
         db.query(sqlGetCategory, [categoryId], async (err, categoryResults) => {
             if (err) {
-                console.error("Database error:", err);
                 return reject(new Error("Database error"));
             }
 
@@ -46,7 +45,6 @@ exports.deleteServiceCategory = async (categoryId) => {
             const sqlGetProducts = "SELECT productImage FROM giftdata WHERE categoryId = ?";
             db.query(sqlGetProducts, [categoryId], async (err, productResults) => {
                 if (err) {
-                    console.error("Database error:", err);
                     return reject(new Error("Database error"));
                 }
 
@@ -79,7 +77,6 @@ exports.deleteServiceCategory = async (categoryId) => {
                 const sqlDeleteCategory = "DELETE FROM gifts WHERE categoryId = ?";
                 db.query(sqlDeleteCategory, [categoryId], (err) => {
                     if (err) {
-                        console.error("Database error:", err);
                         return reject(new Error("Database error"));
                     }
                     resolve("Category deleted successfully");
@@ -107,7 +104,6 @@ exports.updateServiceCategory = async (categoryId, categoryName, title, file) =>
                     if (previousImageUrl) {
                         await deleteImageFromS3(extractFileName(previousImageUrl));
                     }
-
                     // **Step 2: Upload new image to S3**
                     imageUrl = await insertImageToS3(file);                
                 }

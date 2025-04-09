@@ -1,5 +1,3 @@
-const db = require("../models/db")
-const { S3Client, PutObjectCommand, DeleteObjectCommand  } = require('@aws-sdk/client-s3');
 const ourStoriesService = require("../services/ourstorieService");
 
 // ✅ Insert Our Stories
@@ -16,14 +14,12 @@ exports.insertOurStories = async (req, res) => {
         const result = await ourStoriesService.insertServiceOurStories(headline, description, ourStoriesImage);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error.message });
     }
 };
 
 // ✅ Update Our Stories        
 exports.updateOurStories = async (req, res) => {
-    console.log('req.body',req.body)
     const {storyId, headline, description } = req.body;
 
     if (!headline || !description) {
@@ -36,7 +32,6 @@ exports.updateOurStories = async (req, res) => {
         const result = await ourStoriesService.updateServiceOurStories(storyId, headline, description, file);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error });
     }
 };
@@ -53,7 +48,6 @@ exports.deleteOurStories = async (req, res) => {
         const result = await ourStoriesService.deleteServiceOurStories(storyId);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error.message });
     }
 };

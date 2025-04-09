@@ -8,7 +8,6 @@ exports.getAllUsers = (req, res) => {
     
     db.query(sql, (err, results) => {
         if (err) throw err;
-        console.log('results',results);
         res.send(results);
     });
 };
@@ -16,7 +15,6 @@ exports.getAllUsers = (req, res) => {
 // Sign Up User
 exports.signUpUser = (req, res) => {
     const { emailid, password , username} = req.body;
-    console.log(req.body);
 
     if (!emailid || !password || !username) {
         return res.status(400).json({ message: 'Email and password are required' });
@@ -26,7 +24,6 @@ exports.signUpUser = (req, res) => {
     const checkEmailSql = 'SELECT * FROM adminusers WHERE emailid = ?';
     db.query(checkEmailSql, [emailid], (err, results) => {
         if (err) {
-            console.error('Database error:', err);
             return res.status(500).json({ message: 'Database error' });
         }
 
@@ -37,7 +34,6 @@ exports.signUpUser = (req, res) => {
         // Hash password before inserting into DB
         bcrypt.hash(password, 10, (err, hashedPassword) => {
             if (err) {
-                console.error('Error hashing password:', err);
                 return res.status(500).json({ message: 'Error hashing password' });
             }
 
@@ -45,11 +41,9 @@ exports.signUpUser = (req, res) => {
             const insertSql = `INSERT INTO adminusers (emailid,username, password) VALUES (?, ?, ?)`;  
             db.query(insertSql, [emailid, username, hashedPassword], (err, result) => {
                 if (err) {
-                    console.error('Error inserting user:', err);
                     return res.status(500).json({ message: 'Failed to create user' });
                 }
 
-                console.log('User registered:', result);
                 return res.status(200).json({ message: 'User registered successfully.' });
             });
         });
@@ -69,7 +63,6 @@ exports.adminLoginDetails = (req, res) => {
     db.query(sql, [emailid], async (err, results) => {
 
         if (err) {
-            console.error('Database error:', err);
             return res.status(500).json({ success: false, message: 'Internal server error' });
         }
 
@@ -100,7 +93,6 @@ exports.adminLoginDetails = (req, res) => {
 exports.insertCategory = async (req, res) => {
     const { categoryName, title } = req.body;
 
-    console.log('req.file',req)
 
     if (!req.file || !categoryName || !title) {
         return res.status(400).json({ success: false, message: "Missing required fields" });
@@ -110,7 +102,6 @@ exports.insertCategory = async (req, res) => {
         const message = await categoryService.insertServiceCategory(categoryName, title, req.file);
         res.status(200).json({ success: true, message });
     } catch (error) {
-        console.error(" Error:", error);
         res.status(500).json({ success: false, message: error });
     }
 };
@@ -127,7 +118,6 @@ exports.deleteCategory = async (req, res) => {
         const result = await categoryService.deleteServiceCategory(categoryId);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -135,7 +125,6 @@ exports.deleteCategory = async (req, res) => {
 
 // ✅ Update Category
 exports.updateCategory = async (req, res) => {
-    console.log('req.body',req.body)
     const { categoryId, categoryName, title } = req.body;   
     if (!categoryId || !categoryName || !title) {
         return res.status(400).json({ success: false, message: "Category ID, Name and Title are required" });
@@ -147,7 +136,6 @@ exports.updateCategory = async (req, res) => {
         const result = await categoryService.updateServiceCategory(categoryId, categoryName, title, file);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error });
     }
 };

@@ -28,18 +28,13 @@ exports.insertServiceBlog = async (date,title,description,author,productImgfile)
 // ✅ Update Blog
 exports.updatServiceBlog = async (blogId, date,title, description, author,  productImgfile) => {
     return new Promise((resolve, reject) => {
-      console.log('blogId',blogId)
       const sqlCheck = "SELECT * FROM blogposts WHERE blogId = ?";
   
       db.query(sqlCheck, [blogId], async (err, results) => {
         if (err) return reject("Database error: " + err);
-        console.log('results',results)
         if (results.length === 0) return reject("Blog not found");
-
         const previousBlogImage = results[0].imageUrl;
-        
         try {
-           
           let blogImage = previousBlogImage;
           if(productImgfile){
             if (blogImage) {
@@ -70,7 +65,6 @@ exports.deleteServiceBlog = async (blogId) => {
       const sqlSelect = "SELECT imageUrl FROM blogposts WHERE blogId = ?";
       db.query(sqlSelect, [blogId], async (err, results) => {
         if (err) {
-          console.error("Database error:", err);
           return reject(new Error("Database error"));
         }
 
@@ -94,13 +88,11 @@ exports.deleteServiceBlog = async (blogId) => {
           const sqlDelete = "DELETE FROM blogposts WHERE blogId = ?";
           db.query(sqlDelete, [blogId], (deleteErr) => {
             if (deleteErr) {
-              console.error("Database error:", deleteErr);
               return reject(new Error("Error deleting blog from database"));
             }
             resolve("Blog deleted successfully");
           });
         } catch (s3Error) {
-          console.error("Error deleting image from S3:", s3Error);
           reject(new Error("Error deleting image from S3"));
         }
       });

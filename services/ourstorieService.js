@@ -67,7 +67,6 @@ exports.deleteServiceOurStories = async (storyId) => {
         const sqlSelect = "SELECT imageUrl FROM ourStories WHERE storyId = ?";
         db.query(sqlSelect, [storyId], async (err, results) => {
             if (err) {
-                console.error("Database error:", err);
                 return reject(new Error("Database error"));
             }
 
@@ -91,13 +90,11 @@ exports.deleteServiceOurStories = async (storyId) => {
                 const sqlDelete = "DELETE FROM ourStories WHERE storyId = ?";
                 db.query(sqlDelete, [storyId], (deleteErr) => {
                     if (deleteErr) {
-                        console.error("Database error:", deleteErr);
                         return reject(new Error("Error deleting Our Stories from database"));
                     }
                     resolve("Our Stories deleted successfully");
                 });
             } catch (s3Error) {
-                console.error("Error deleting image from S3:", s3Error);
                 reject(new Error("Error deleting image from S3"));
             }
         });

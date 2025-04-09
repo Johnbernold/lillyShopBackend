@@ -67,7 +67,6 @@ exports.deleteServiceScrollScreen = async (scrollId) => {
         const sqlSelect = "SELECT scrollImage FROM scrollscreen WHERE scrollId = ?";
         db.query(sqlSelect, [scrollId], async (err, results) => {
             if (err) {
-                console.error("Database error:", err);
                 return reject(new Error("Database error"));
             }
 
@@ -91,13 +90,11 @@ exports.deleteServiceScrollScreen = async (scrollId) => {
                 const sqlDelete = "DELETE FROM scrollscreen WHERE scrollId = ?";
                 db.query(sqlDelete, [scrollId], (deleteErr) => {
                     if (deleteErr) {
-                        console.error("Database error:", deleteErr);
                         return reject(new Error("Error deleting Scroll Screen from database"));
                     }
                     resolve("Scroll Screen deleted successfully");
                 });
             } catch (s3Error) {
-                console.error("Error deleting image from S3:", s3Error);
                 reject(new Error("Error deleting image from S3"));
             }
         });
