@@ -1,23 +1,20 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const adminRoutes = require('./routes/adminRoutes');
 const userDashboardRoutes = require('./routes/userDashboardRoutes');
-const setupSwagger = require("./swagger"); // Import Swagger setup
-const cors = require('cors');
+
 const app = express();
+const PORT = process.env.PORT || 3600;
 
-//cross origin
+// === CORS Configuration ===
 const corsOptions = {
-    origin: '*', // Allow all origins (change this in production)
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization'
+  origin: '*', // Change this to your frontend domain in production
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
 };
-
-
-
-// Initialize Swagger
-setupSwagger(app);
-
 
 // const corsOptions = {
 //     origin: ['http://your-frontend.com', 'https://another-site.com'],
@@ -28,16 +25,26 @@ setupSwagger(app);
 
 app.use(cors(corsOptions));
 
-// Body parser middleware
+// === Body Parser Middleware ===
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// User routes
+// === Swagger (only in development) ===
+if (process.env.NODE_ENV !== 'production') {
+  const setupSwagger = require('./swagger');
+  setupSwagger(app);
+}
+
+// === Routes ===
 app.use('/admin', adminRoutes);
 app.use('/user', userDashboardRoutes);
 
-const PORT = process.env.PORT || 3600;
+// === Default Route ===
+app.get('/', (req, res) => {
+  res.send('Server is running...');
+});
 
+// === Start Server ===
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

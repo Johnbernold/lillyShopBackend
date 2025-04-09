@@ -46,7 +46,6 @@ exports.insertServiceProduct = async (productName, productPrice, categoryId, pro
             imageUrl = await insertImageToS3(productImgfile);                
           }
 
-          console.log('imageUrl',imageUrl)
           const sqlUpdate = "UPDATE giftdata SET productName = ?, productPrice = ?, productImage = ?, categoryId = ? WHERE productId = ?";
           db.query(sqlUpdate, [productName, productPrice, imageUrl, categoryId, productId], (updateErr, results) => {   
             if (updateErr) return reject("Database error: " + updateErr);
@@ -66,7 +65,6 @@ exports.deleteServiceProduct = async (productId) => {
     const sqlSelect = "SELECT productImage FROM giftdata WHERE productId = ?";
     db.query(sqlSelect, [productId], async (err, results) => {
       if (err) {
-        console.error("Database error:", err);
         return reject(new Error("Database error"));
       }
 
@@ -90,13 +88,11 @@ exports.deleteServiceProduct = async (productId) => {
         const sqlDelete = "DELETE FROM giftdata WHERE productId = ?";
         db.query(sqlDelete, [productId], (deleteErr) => {
           if (deleteErr) {
-            console.error("Database error:", deleteErr);
             return reject(new Error("Error deleting product from database"));
           }
           resolve("Product deleted successfully");
         });
       } catch (s3Error) {
-        console.error("Error deleting image from S3:", s3Error);
         reject(new Error("Error deleting image from S3"));
       }
     });

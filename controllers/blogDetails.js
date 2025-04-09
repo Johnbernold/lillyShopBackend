@@ -7,7 +7,6 @@ const blogService = require("../services/blogService");
 exports.insertBlogPost = async (req, res) => {
     const { date, title, description, author } = req.body;
 
-    console.log('blogImage',  req.file )
 
     if (!date || !title || !description || !author || !req.file) {
         return res.status(400).json({ success: false, message: 'Missing required fields' });
@@ -15,13 +14,10 @@ exports.insertBlogPost = async (req, res) => {
 
     const blogImage = req.file // If no file is uploaded, pass null
 
-   
-
     try {
         const result = await blogService.insertServiceBlog(date,title, description, author, blogImage);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -40,7 +36,6 @@ exports.updateBlogPost = async (req, res) => {
         const result = await blogService.updatServiceBlog(blogId, date, title, description, author, file);
         return res.status(200).json({ success: true, message: result });
     } catch (error) {
-        console.error("Error:", error);
         return res.status(500).json({ success: false, message: error });
     }
 };
@@ -58,7 +53,6 @@ exports.deleteBlogPost = async (req, res) => {
     const result = await blogService.deleteServiceBlog(blogId);
     return res.status(200).json({ success: true, message: result });
   } catch (error) {
-    console.error("Error:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
