@@ -141,6 +141,28 @@ exports.updateCategory = async (req, res) => {
 };
 
 
+// ✅ Get All Categories
+exports.getAllCategories = async (req, res) => {
+    try {
+        const result = await categoryService.getAllCategories();
+        return res.status(200).json({ success: true, message: result });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error });
+    }   
+};  
+
+
+// ✅ Get All Categories
+exports.dropdownCategories = async (req, res) => {
+    try {
+        const result = await categoryService.dropdownCategories();
+        return res.status(200).json({ success: true, message: result });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error });
+    }   
+};
+
+
 
 
 

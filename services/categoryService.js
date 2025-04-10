@@ -1,6 +1,30 @@
 const db = require("../models/db");
 const { extractFileName,deleteImageFromS3, batchDeleteImagesFromS3,insertImageToS3 } = require("../utils/s3Utils");
 
+
+// ✅ Get All Categories
+exports.getAllCategories = async () => {
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT * FROM gifts";
+        db.query(sql, (err, results) => {
+            if (err) return reject("Database error: " + err);
+            resolve(results);
+        });
+    });
+};
+
+// ✅ Get All Categories for Dropdown
+exports.dropdownCategories = async () => {
+    return new Promise((resolve, reject) => {
+        const sql = "SELECT categoryId,categoryName FROM gifts";
+        db.query(sql, (err, results) => {
+            if (err) return reject("Database error: " + err);
+            resolve(results);
+        });
+    });
+};
+
+
 // ✅ Insert Category
 exports.insertServiceCategory = async (categoryName, title, file) => {
     return new Promise((resolve, reject) => {
