@@ -227,6 +227,38 @@ router.put("/updateCategory", verifyToken, upload.single("categoryImage"), admin
 
 /**
  * @swagger
+ * /admin/getAllCategories:
+ *   get:
+ *     summary: Get all categories
+ *     tags: [Category]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved categories.
+ *       500:
+ *         description: Server error
+ */
+router.get("/getAllCategories", verifyToken, adminlogin.getAllCategories);
+
+/**
+ * @swagger
+ * /admin/dropdown-categories:
+ *   get:
+ *     summary: Get all categories
+ *     tags: [Category]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved categories.
+ *       500:
+ *         description: Server error
+ */
+router.get("/dropdown-categories", verifyToken, adminlogin.dropdownCategories);
+
+/**
+ * @swagger
  * /admin/insertGiftProduct:
  *   post:
  *     summary: Insert a new gift product
