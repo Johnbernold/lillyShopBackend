@@ -18,9 +18,13 @@ exports.insertGiftProduct = async (req, res) => {
 //update product
 exports.updateProduct = async (req, res) => {
   const { productId, productName, productPrice, categoryId } = req.body;
+
+  console.log(productId, productName, productPrice, categoryId);
+
   if (!productId || !productName  || !productPrice) {
     return res.status(400).json({ success: false, message: "Product ID, Name and Price are required" });
   }
+  console.log(req.file);
   const file = req.file || null; // If no file is uploaded, pass null
   try {
     const result = await productService.updateServiceProduct(productId, productName, productPrice,categoryId, file);

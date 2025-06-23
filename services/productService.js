@@ -36,8 +36,9 @@ exports.insertServiceProduct = async (productName, productPrice, categoryId, pro
         const previousImageUrl = results[0].productImage;
         try {
           let imageUrl = previousImageUrl;
-
+          console.log("productImgfile", productImgfile, "imageUrl", imageUrl);
           if(productImgfile){
+            console.log("calling deleteImageFromS3");
             if (previousImageUrl) {
               await deleteImageFromS3(extractFileName(previousImageUrl));
             }
