@@ -33,7 +33,16 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 function setupSwagger(app) {
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+        swaggerOptions: {
+            withCredentials: true, // 👈 Allow sending cookies
+            docExpansion: 'none',
+        },
+    })
+  );
 }
  
 module.exports = setupSwagger;

@@ -84,7 +84,6 @@ exports.adminLoginDetails = (req, res) => {
 
         const userDetails = { adminId: user.adminId, emailid: user.emailid, token };
         res.status(200).json({ success: true, message: 'Login successful', user: userDetails });
-
     });
 };
 
@@ -92,7 +91,6 @@ exports.adminLoginDetails = (req, res) => {
 
 exports.insertCategory = async (req, res) => {
     const { categoryName, title } = req.body;
-
 
     if (!req.file || !categoryName || !title) {
         return res.status(400).json({ success: false, message: "Missing required fields" });
