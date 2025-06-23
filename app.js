@@ -1,3 +1,5 @@
+//Added today
+
 require('dotenv').config();
 
 const express = require('express');
@@ -15,6 +17,7 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
 };
+
 
 // const corsOptions = {
 //     origin: ['http://your-frontend.com', 'https://another-site.com'],
